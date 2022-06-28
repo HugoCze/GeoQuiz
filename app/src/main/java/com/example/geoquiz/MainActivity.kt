@@ -39,33 +39,37 @@ class MainActivity : AppCompatActivity() {
     private val KEY_CORRECT_ANSWERS = "number_correct"
     private val KEY_WHICH_QUESTIONS_ANSWERED = "which_answered"
 
+//    Toast function displays the message correct and incorrect message inside the app
+//    <- this particular one could be solved differently - I will think of something more elegant later
     private fun toast(messageResID: Int) {
         Toast.makeText(this, messageResID, Toast.LENGTH_SHORT).show()
     }
-
+//    It takes one argument which defines the correct answer
     private fun checkAnswer(userPressedTrue: Boolean) {
+//        This value check the index of current question in the bank and lets us know the answer which is on of class arguements
         val answerIstrue = questionBank[currentIndex].answer
-
         // Challenge - Mark question as answered and disable buttons and count answered questions
         questionBank[currentIndex].alreadyAnswered = true
         buttonsEnabled(false)
         answeredQuestions++
 
         var messageResId = 0
-
+//        Condtional verifies if the true button was pressed and was it true by accesing class argument
         if (userPressedTrue == answerIstrue) {
+//            Further function is creating proper info to display and if true adds it to ealier described correct answers
             messageResId = R.string.correct_toast
             correctAnswers++
         } else {
             messageResId = R.string.incorrect_toast
         }
-
+//        At the end we are getting the toast message depends of our answer and the score calculation
         toast(messageResId)
         calculateScore()
     }
-
+//    here function saves question as imported question string
     private fun updateQuestion() {
         val question = questionBank[currentIndex].textResId
+//        setting up text to display
         binding.questionTextView.setText(question)
 
         // Challenge - disable or enable answer buttons depending if the Question was already answered
@@ -100,9 +104,6 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
-
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -163,9 +164,6 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d(TAG, "onDestroy() called")
     }
-
-
-
 
 }
 
