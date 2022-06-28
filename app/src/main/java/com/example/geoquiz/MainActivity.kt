@@ -12,9 +12,10 @@ import com.google.android.material.snackbar.Snackbar
 //import com.bignerdranch.android.geoquiz.databinding.ActivityMainBinding
 import com.example.geoquiz.databinding.ActivityMainBinding
 
-
+//Main class
 class MainActivity : AppCompatActivity() {
 
+//    List of quesions to display in the app based on Question data class
     private val questionBank = listOf(
         Question(R.string.question_africa, false, false),
         Question(R.string.question_australia, true,false),
@@ -25,12 +26,12 @@ class MainActivity : AppCompatActivity() {
     )
 
     private val TAG = "MainActivity"
+//    Index variable to operate with
     private var currentIndex = 0
-    private val KEY_INDEX = "index"
     // Challenge - Counters to keep track of number of questions answered and how many correct
     private var answeredQuestions = 0
     private var correctAnswers = 0
-    // Array to save the state of which questions were answered the size of mQuestion Bank
+    // Array to save the state of which questions were answered the size of questionbank variable
     private var whichAnswered = BooleanArray(questionBank.size)
 
     // KEYS to save state if user rotates device and the Activity is recreated
