@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 //import com.bignerdranch.android.geoquiz.databinding.ActivityMainBinding
@@ -15,24 +16,15 @@ import com.example.geoquiz.databinding.ActivityMainBinding
 //Main class
 class MainActivity : AppCompatActivity() {
 
-//    List of quesions to display in the app based on Question data class
-    private val questionBank = listOf(
-        Question(R.string.question_africa, false, false),
-        Question(R.string.question_australia, true,false),
-        Question(R.string.question_oceans, true, false),
-        Question(R.string.question_mideast, false, false),
-        Question(R.string.question_americas, true, false),
-        Question(R.string.question_asia, true, false),
-    )
+
 
     private val TAG = "MainActivity"
-//    Index variable to operate with
-    private var currentIndex = 0
+
     // Challenge - Counters to keep track of number of questions answered and how many correct
     private var answeredQuestions = 0
     private var correctAnswers = 0
     // Array to save the state of which questions were answered the size of questionbank variable
-    private var whichAnswered = BooleanArray(questionBank.size)
+//    private var whichAnswered = BooleanArray(quizViewModel.questionBank.size)
 
     // KEYS to save state if user rotates device and the Activity is recreated
     private val KEY_ANSWERED_QUESTIONS = "number_answered"
@@ -47,9 +39,9 @@ class MainActivity : AppCompatActivity() {
 //    It takes one argument which defines the correct answer
     private fun checkAnswer(userPressedTrue: Boolean) {
 //        This value check the index of current question in the bank and lets us know the answer which is on of class arguements
-        val answerIstrue = questionBank[currentIndex].answer
+        val answerIstrue = quizViewModel.currentQuestionAnswer
         // Challenge - Mark question as answered and disable buttons and count answered questions
-        questionBank[currentIndex].alreadyAnswered = true
+        quizViewModel.questionBank[quizViewModel.currentIndex].alreadyAnswered = true
         buttonsEnabled(false)
         answeredQuestions++
 
@@ -68,12 +60,12 @@ class MainActivity : AppCompatActivity() {
     }
 //    here function saves question as imported question string
     private fun updateQuestion() {
-        val question = questionBank[currentIndex].textResId
+        val question = quizViewModel.currentQuestionText
 //        setting up text to display
         binding.questionTextView.setText(question)
 
         // Challenge - disable or enable answer buttons depending if the Question was already answered
-        if (!questionBank[currentIndex].alreadyAnswered) {
+        if (!quizViewModel.questionBank[quizViewModel.currentIndex].alreadyAnswered) {
             buttonsEnabled(true)
         } else buttonsEnabled(false)
     }
@@ -86,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     // Challenge method to calculate score
     private fun calculateScore() {
-        val totalQuestions = questionBank.size
+        val totalQuestions = quizViewModel.questionBank.size
         val score = correctAnswers * 100 / totalQuestions
 
         // Challenge - Only shows score if we answered all the questions, and then rests all
@@ -98,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             // reset
             correctAnswers = 0
             answeredQuestions = 0
-            for (question in questionBank) {
+            for (question in quizViewModel.questionBank) {
                 question.alreadyAnswered = false
             }
 
@@ -127,19 +119,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.nextButton.setOnClickListener {
-            currentIndex = (currentIndex + 1) % questionBank.size
+            quizViewModel.moveToNext()
             updateQuestion()
         }
 
         binding.previousButton.setOnClickListener {
-            currentIndex = (currentIndex - 1) % questionBank.size
+            quizViewModel.moveToNext()
             updateQuestion()
         }
 
         updateQuestion()
 
         binding.questionTextView.setOnClickListener {
-            currentIndex = (currentIndex + 1) % questionBank.size
+            quizViewModel.moveToNext()
             updateQuestion()
         }
 
