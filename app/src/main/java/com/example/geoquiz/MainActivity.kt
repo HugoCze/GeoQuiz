@@ -16,8 +16,6 @@ import com.example.geoquiz.databinding.ActivityMainBinding
 //Main class
 class MainActivity : AppCompatActivity() {
 
-
-
     private val TAG = "MainActivity"
 
     // Challenge - Counters to keep track of number of questions answered and how many correct
