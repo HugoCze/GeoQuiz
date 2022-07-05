@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity() {
 //    private var whichAnswered = BooleanArray(quizViewModel.questionBank.size)
 
     // KEYS to save state if user rotates device and the Activity is recreated
-    private val KEY_ANSWERED_QUESTIONS = "number_answered"
-    private val KEY_CORRECT_ANSWERS = "number_correct"
-    private val KEY_WHICH_QUESTIONS_ANSWERED = "which_answered"
+//    private val KEY_ANSWERED_QUESTIONS = "number_answered"
+//    private val KEY_CORRECT_ANSWERS = "number_correct"
+//    private val KEY_WHICH_QUESTIONS_ANSWERED = "which_answered"
 
 //    Toast function displays the message correct and incorrect message inside the app
 //    <- this particular one could be solved differently - I will think of something more elegant later
@@ -158,7 +158,10 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "onDestroy() called")
+
+
     }
 
 }
+
 
