@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
-private const val TAG = "QuizViewModel"
+//private const val TAG = "QuizViewModel"
 const val CURRENT_INDEX_KEY = "CURRENT_INDEX_KEY"
 
 class QuizViewModel(private val savedStateHandle: SavedStateHandle): ViewModel() {
@@ -14,9 +14,9 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle): ViewModel()
 
     //    List of quesions to display in the app based on Question data class
     var questionBank = listOf(
-        Question(R.string.question_africa, false, false, 1),
-        Question(R.string.question_australia, true,false, 2),
-        Question(R.string.question_oceans, true, false, 3),
+        Question(R.string.question_australia, false, false, 1),
+        Question(R.string.question_oceans, true,false, 2),
+        Question(R.string.question_africa, true, false, 3),
         Question(R.string.question_mideast, false, false, 4),
         Question(R.string.question_americas, true, false, 5),
         Question(R.string.question_asia, true, false, 6),
@@ -37,6 +37,8 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle): ViewModel()
         get() = questionBank[currentIndex].textResId
 
     fun moveToNext() {
+//        usefull while debugging the app
+//        Log.d(TAG, "Updating question text", Exception())
         currentIndex = (currentIndex + 1) % questionBank.size
     }
 
